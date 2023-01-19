@@ -2,11 +2,17 @@ const express = require('express');
 const mongoose = require('mongoose');
 const contacto = require('./src/models/contacto');
 
+const { engine } = require('express-handlebars');
+
 require('dotenv').config();
 
 const apiRoutes = require('./src/routes/api');
 
 const app = express();
+
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', './src/views');
 
 const port = process.env.PORT || 3000;
 
@@ -18,7 +24,8 @@ app.use('/fotos', express.static(__dirname + '/uploads/images'));
 app.use('/assets', express.static(__dirname + '/assets'));
 
 app.get('', (req, res) => {
-    res.sendFile(__dirname + '/src/views/index.html');
+    // res.sendFile(__dirname + '/src/views/index.html');
+    res.render('index');
 });
 
 
