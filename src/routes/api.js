@@ -29,15 +29,16 @@ const multerStorage = multer.diskStorage(storage);
 const upload = multer({ storage: multerStorage, fileFilter:  filter });
 
 // CONTACTOS
-router.use('/contactos', authMiddleware);
-router.get('/contactos', contactosController.listar);
-router.get('/contactos/:id', contactosController.ver);
-router.post('/contactos', express.json(), upload.single('foto'), contactosController.crear);
+router.use('/api', authMiddleware);
+router.get('/api/contactos', contactosController.listar);
+router.get('/api/contactos/:id', contactosController.ver);
+router.post('/api/contactos', express.json(), upload.single('foto'), contactosController.crear);
 
 
 // USUARIOS
 router.post('/registro', usuariosController.registro);
 router.post('/login', usuariosController.login);
+router.get('/registro', usuariosController.formRegistro);
 
 module.exports = router;
 

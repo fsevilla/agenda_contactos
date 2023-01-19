@@ -30,15 +30,27 @@ module.exports = {
     },
     registro: (req, res) => {
         const datos = req.body;
+        console.log('Datos: ', req.body);
+        if(!datos.password || !datos.nombre || !datos.correo) {
+            res.status(400).send({mensaje: 'este fue el error'});
+            return;
+        }
+
         const hashedPassword = hashPassword(datos.password);
         datos.password = hashedPassword; //
         modelo.create(datos).then(response => {
             const {_id, nombre, correo} = response;
-            res.send({_id, nombre, correo});
+            // res.send({_id, nombre, correo});
+            res.render('confirmacion', { nombre, correo });
+
         }).catch(err => {
             console.log(err);
-            res.sendStatus(400);
+            // res.sendStatus(400);
+            res.render('confirmacion', { error: true, correo: datos.correo });
         });
+    },
+    formRegistro: (req, res) => {
+        res.render('registro');
     }
 }
 
