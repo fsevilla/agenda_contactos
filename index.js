@@ -12,7 +12,7 @@ const app = express();
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
-app.set('views', './src/views');
+app.set('views', __dirname + '/src/views');
 
 const port = process.env.PORT || 3000;
 
